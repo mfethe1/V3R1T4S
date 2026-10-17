@@ -35,12 +35,18 @@ def validate(data):
         for field in fields:
             if field not in data[group]:
                 errors.append(f"{group}.{field} is required")
-    for arm in ("baseline", "intervention"):
-        value = data["arms"].get(arm)
-        if isinstance(value, dict):
-            for field in ("name", "command", "configuration_sha256"):
-                if not value.get(field):
-                    errors.append(f"arms.{arm}.{field} must be non-empty")
+    arms = data["arms"]
+    for arm in ("baseline", "intervention") if isinstance(arms, dict) else ():
+        value = arms.get(arm)
+        if not isinstance(value, dict):
+            errors.append(f"arms.{arm} must be an object")
+            continue
+        for field in ("name", "command"):
+            if not value.get(field):
+                errors.append(f"arms.{arm}.{field} must be non-empty")
+        digest = value.get("configuration_sha256")
+        if not isinstance(digest, str) or not HEX64.fullmatch(digest):
+            errors.append(f"arms.{arm}.configuration_sha256 must be sha256 plus 64 lowercase hex digits")
     workload = data["workload"]
     if isinstance(workload, dict):
         for field in ("request_count", "concurrency"):

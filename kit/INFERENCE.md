@@ -1,5 +1,7 @@
 # Reproducible local-inference experiments
 
+**Disposition:** This generic card was declined for V3R1T4S in [PR #256](https://github.com/elder-plinius/V3R1T4S/pull/256): it is not tied to an existing bank target. It remains on the contributor branch for reference, not as an accepted part of the hunt. Future contributions should address a concrete bank target or a documented target-specific pitfall; this card belongs in a separate inference-benchmarking project.
+
 Use this card for a bounded local inference comparison. It is a protocol, not a claim that a configuration is faster or better. Keep raw prompt/answer records when permitted; redact secrets and private data. Do not publish personal data, proprietary prompts, model weights, or provider credentials.
 
 ## Freeze before running
